@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentOS 2.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="/" aria-label="AgentOS home">
+          <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+          <span>Agent<span class="brand-light">OS</span></span>
+          <sup>2.0</sup>
+        </a>
+
+        <button class="new-chat-button" id="new-chat" type="button">
+          <span aria-hidden="true">＋</span>
+          <span>New request</span>
+          <kbd aria-label="Keyboard shortcut">⌘K</kbd>
+        </button>
+
+        <div class="nav-label">VIEWS</div>
+        <nav class="primary-nav" aria-label="Primary navigation">
+          <button class="nav-item active" data-view="chat" type="button"><span class="nav-icon" aria-hidden="true">✦</span><span>Assistant</span></button>
+          <button class="nav-item" data-view="monitor" type="button"><span class="nav-icon" aria-hidden="true">◔</span><span>System monitor</span><span class="nav-count" id="monitor-alert-count"></span></button>
+          <button class="nav-item" data-view="agents" type="button"><span class="nav-icon" aria-hidden="true">⬡</span><span>Agent network</span><span class="nav-count" id="agent-count">5</span></button>
+          <button class="nav-item" data-view="tasks" type="button"><span class="nav-icon" aria-hidden="true">☰</span><span>Active tasks</span><span class="nav-count" id="task-count">0</span></button>
+          <button class="nav-item" data-view="approvals" type="button"><span class="nav-icon" aria-hidden="true">✓</span><span>Approval center</span><span class="approval-count" id="approval-count">0</span></button>
+          <button class="nav-item" data-view="activity" type="button"><span class="nav-icon" aria-hidden="true">⏱</span><span>Activity history</span></button>
+        </nav>
+
+        <div class="conversation-header">
+          <div class="nav-label">RECENT CONVERSATIONS</div>
+          <button class="icon-button subtle" id="clear-history" title="Clear all conversation history" type="button" aria-label="Clear all conversation history">✕</button>
+        </div>
+        <div class="conversation-list" id="conversation-list" role="navigation" aria-label="Recent conversations"></div>
+
+        <div class="sidebar-bottom">
+          <div class="system-status"><span class="status-dot" id="provider-dot"></span><span id="provider-status">Connecting to Groq</span></div>
+          <button class="nav-item settings-link" data-view="settings" type="button"><span class="nav-icon" aria-hidden="true">⚙</span><span>Settings &amp; privacy</span></button>
+          <div class="profile">
+            <div class="avatar" id="profile-avatar">YO</div>
+            <div class="profile-info"><strong id="profile-name">Your workspace</strong><small>Local SQLite</small></div>
+            <span class="profile-menu" aria-hidden="true">⋯</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content" id="main-content">
+        <header class="topbar">
+          <div class="breadcrumb">
+            <button class="icon-button mobile-menu" id="menu-toggle" type="button" aria-label="Toggle navigation menu">☰</button>
+            <span>AgentOS</span>
+            <span class="crumb-separator">/</span>
+            <strong id="page-title">Assistant</strong>
+          </div>
+          <div class="topbar-right">
+            <button class="icon-button subtle" id="delete-conversation" title="Delete this conversation" type="button" aria-label="Delete this conversation" hidden>✕</button>
+            <div class="live-indicator"><span class="status-dot" id="header-connection-dot"></span><span id="header-connection-text">LIVE</span></div>
+            <button class="icon-button" id="theme-toggle" title="Toggle theme" type="button" aria-label="Toggle theme">◐</button>
+          </div>
+        </header>
+
+        <section class="view active" id="view-chat">
+          <div class="chat-layout">
+            <div class="chat-column">
+              <div class="chat-heading">
+                <div>
+                  <div class="eyebrow"><span class="eyebrow-dot"></span><span>LOCAL-FIRST WORKSPACE</span></div>
+                  <h1>How can the <span>agent team</span> help, <span id="greeting-name">you</span>?</h1>
+                  <p>Sequential LangGraph workflow: Planner, Researcher, Executor, Verifier, and Communicator.</p>
+                </div>
+              </div>
+
+              <div class="suggestion-grid" id="suggestions">
+                <button class="suggestion-card" data-prompt="Analyze the trade-offs of using SQLite for single-user local-first applications." type="button">
+                  <div class="suggestion-icon violet">◆</div><div><strong>Analyze SQLite trade-offs</strong><small>Evaluate local persistence</small></div><span class="suggestion-arrow">→</span>
+                </button>
+                <button class="suggestion-card" data-prompt="Design an incident checklist for elevated API latency." type="button">
+                  <div class="suggestion-icon blue">◉</div><div><strong>Draft incident checklist</strong><small>Operational readiness</small></div><span class="suggestion-arrow">→</span>
+                </button>
+                <button class="suggestion-card" data-prompt="Delete all production customer accounts immediately." type="button">
+                  <div class="suggestion-icon amber">▲</div><div><strong>Test sensitive approval gate</strong><small>Verify action controls</small></div><span class="suggestion-arrow">→</span>
+                </button>
+              </div>
+
+              <div class="message-list" id="message-list" aria-live="polite"></div>
+
+              <div class="composer-wrap">
+                <form class="composer" id="chat-form">
+                  <textarea id="chat-input" placeholder="Ask your agent team anything... (Enter to send, Shift+Enter for newline)" rows="1" maxlength="6000"></textarea>
+                  <div class="composer-footer">
+                    <div class="composer-hint"><span class="sparkle">✦</span><span>Five-stage sequential workflow with approval gate</span></div>
+                    <div class="composer-actions"><span class="char-count" id="char-count">0 / 6000</span><button class="send-button" id="send-button" type="submit" aria-label="Send message">↑</button></div>
+                  </div>
+                </form>
+                <div class="privacy-note"><span>🔒</span>Local conversation history. Sensitive actions held for review. External actions are not connected.</div>
+              </div>
+            </div>
+
+            <aside class="right-rail">
+              <div class="rail-section">
+                <div class="rail-heading"><div><div class="section-kicker">TEAM</div><h2>Agent network</h2></div><span class="live-tag"><i></i>ONLINE</span></div>
+                <div class="agent-mini-list" id="agent-mini-list"></div>
+              </div>
+              <div class="rail-section">
+                <div class="rail-heading"><div><div class="section-kicker">CURRENT RUN</div><h2>Pipeline</h2></div><span class="text-button" id="clear-pipeline">Clear</span></div>
+                <div class="pipeline-mini" id="pipeline-mini"><div class="empty-pipeline">No active workflow. Send a request to begin.</div></div>
+              </div>
+              <div class="rail-section">
+                <div class="rail-heading"><div><div class="section-kicker">COLLABORATION</div><h2>Inter-agent activity</h2></div></div>
+                <div class="communication-list" id="agent-communication"></div>
+              </div>
+              <div class="rail-footnote"><span class="shield-icon">🛡</span><div><strong>Safety boundary</strong><small>The Executor does not execute actions. Approvals only record authorization.</small></div></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="view-monitor">
+          <div class="monitor-content">
+            <div class="monitor-header">
+              <div class="page-heading">
+                <div class="eyebrow">SYSTEM TELEMETRY</div>
+                <h1>System monitor</h1>
+                <p>Live resource utilization, SQLite health, API latency, and Groq model availability.</p>
+              </div>
+              <div class="monitor-header-actions">
+                <span class="monitor-updated" id="monitor-updated">Awaiting telemetry…</span>
+                <button class="secondary-button" id="refresh-monitor" type="button">Refresh</button>
+                <button class="primary-button" id="run-diagnostics" type="button">Diagnose system</button>
+              </div>
+            </div>
+
+            <div class="monitor-status-strip" id="monitor-status-strip"></div>
+            <div class="metric-grid" id="metric-grid"></div>
+
+            <div class="monitor-panel history-panel">
+              <div class="monitor-panel-heading">
+                <div><div class="section-kicker">HISTORICAL TRENDS</div><h2>Resource utilization</h2></div>
+                <select class="period-select" id="history-period" aria-label="History period">
+                  <option value="1h">Last 1 hour</option>
+                  <option value="6h">Last 6 hours</option>
+                  <option value="24h" selected>Last 24 hours</option>
+                  <option value="7d">Last 7 days</option>
+                </select>
+              </div>
+              <div class="chart-legend"><span class="legend-item"><i class="legend-cpu"></i>CPU</span><span class="legend-item"><i class="legend-memory"></i>Memory</span><span class="legend-item"><i class="legend-disk"></i>Disk</span></div>
+              <div class="chart-frame">
+                <canvas id="resource-chart" width="900" height="220" aria-label="Historical resource utilization chart"></canvas>
+                <div class="chart-empty" id="chart-empty">Collecting monitoring samples…</div>
+              </div>
+              <div class="chart-footnote" id="chart-footnote">Sampled every 15 seconds. High usage highlights yellow.</div>
+            </div>
+
+            <div class="monitor-columns">
+              <div class="monitor-panel">
+                <div class="monitor-panel-heading"><div><div class="section-kicker">AGENT PERFORMANCE</div><h2>Execution health</h2></div><span class="count-pill" id="agent-health-count">5 agents</span></div>
+                <div class="monitor-agent-list" id="monitor-agent-list"></div>
+                <p class="monitor-help">Latency reflects real elapsed time spent inside LangGraph nodes.</p>
+              </div>
+
+              <div class="monitor-panel">
+                <div class="monitor-panel-heading"><div><div class="section-kicker">ATTENTION REQUIRED</div><h2>Active alerts</h2></div><span class="alert-badge" id="active-alert-count">0 active</span></div>
+                <div class="monitor-alert-list" id="monitor-alert-list"></div>
+                <p class="monitor-help">Alerts resolve automatically when measured values return below threshold.</p>
+              </div>
+            </div>
+
+            <div class="monitor-columns">
+              <div class="monitor-panel">
+                <div class="monitor-panel-heading"><div><div class="section-kicker">ADVISORY INTELLIGENCE</div><h2>Diagnostic reports</h2></div></div>
+                <div class="diagnostic-reports" id="diagnostic-reports"><div class="empty-state">No diagnostic runs yet. Click "Diagnose system" to analyze current telemetry.</div></div>
+              </div>
+
+              <div class="monitor-panel">
+                <div class="monitor-panel-heading"><div><div class="section-kicker">THRESHOLDS</div><h2>Alert configuration</h2></div></div>
+                <form id="alert-settings-form" class="threshold-grid">
+                  <label>CPU threshold (%)<input type="number" name="cpu_percent" min="1" max="100" required></label>
+                  <label>Memory threshold (%)<input type="number" name="memory_percent" min="1" max="100" required></label>
+                  <label>Disk threshold (%)<input type="number" name="disk_percent" min="1" max="100" required></label>
+                  <label>API latency threshold (ms)<input type="number" name="api_latency_ms" min="1" max="60000" step="50" required></label>
+                  <label>WebSocket disconnects / 5m<input type="number" name="websocket_disconnects" min="1" max="1000" required></label>
+                  <label class="notification-toggle"><input type="checkbox" name="notifications_enabled"><span>Enable browser notifications</span></label>
+                  <button type="submit" class="secondary-button threshold-save">Save alert settings</button>
+                </form>
+              </div>
+            </div>
+
+            <div class="monitor-panel log-panel">
+              <div class="monitor-panel-heading"><div><div class="section-kicker">ERROR TELEMETRY</div><h2>Recent application errors</h2></div></div>
+              <div class="monitor-error-list" id="monitor-errors"><div class="empty-state">No application errors recorded in this time window.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="view-agents">
+          <div class="page-content">
+            <div class="page-heading"><div class="eyebrow">SPECIALIZED AGENT PIPELINE</div><h1>Agent network</h1><p>Each agent has a bounded role and operates in strict sequential order.</p></div>
+            <div class="agent-grid" id="agent-grid"></div>
+            <div class="info-banner"><span>✦</span><p><strong>Strict sequential execution:</strong> Planner → Researcher → Risk Gate → Executor → Verifier → Communicator. Workflows run on Groq inference with no external action side effects.</p></div>
+          </div>
+        </section>
+
+        <section class="view" id="view-tasks">
+          <div class="page-content"><div class="page-heading"><div class="eyebrow">PROGRESS AND STATE</div><h1>Active tasks</h1><p>Real-time view of individual tasks created for the active conversation.</p></div><div class="task-list" id="task-list"></div></div>
+        </section>
+
+        <section class="view" id="view-approvals">
+          <div class="page-content"><div class="page-heading"><div class="eyebrow">YOU ARE IN CONTROL</div><h1>Approval center</h1><p>Sensitive requests are held for your review. Authorizing a request does not execute it—no external action tools are connected.</p></div><div class="approval-list" id="approval-list"></div></div>
+        </section>
+
+        <section class="view" id="view-activity">
+          <div class="page-content"><div class="page-heading"><div class="eyebrow">A CLEAR RECORD</div><h1>Activity history</h1><p>A transparent timeline of what your agents did and when.</p></div><div class="activity-list" id="activity-list"></div></div>
+        </section>
+
+        <section class="view" id="view-settings">
+          <div class="page-content settings-content"><div class="page-heading"><div class="eyebrow">YOUR WORKSPACE, YOUR RULES</div><h1>Settings &amp; privacy</h1><p>Manage your local workspace preferences and configure your Groq AI model connection.</p></div>
+            <div class="settings-card"><div class="settings-card-heading"><span class="settings-symbol">◉</span><div><h2>Workspace profile</h2><p>Personalize your AgentOS experience.</p></div></div><label class="field-label" for="display-name">Display name</label><div class="inline-field"><input id="display-name" maxlength="60" placeholder="Your name"><button class="secondary-button" id="save-name" type="button">Save changes</button></div></div>
+            <div class="settings-card"><div class="settings-card-heading"><span class="settings-symbol">⬡</span><div><h2>Privacy &amp; safety</h2><p>AgentOS is designed to keep you in control.</p></div></div><div class="privacy-item"><div><strong>Local conversation storage</strong><p>Conversations are stored in a SQLite database on this machine. Delete a conversation or clear your history at any time.</p></div><span class="setting-badge">ON DEVICE</span></div><div class="privacy-item"><div><strong>External actions</strong><p>AgentOS has no connected action tools. Approving a sensitive request records authorization only; it does not send, purchase, publish, or modify anything.</p></div><span class="setting-badge">NOT CONNECTED</span></div><div class="privacy-item"><div><strong>Model provider</strong><p>Your request is sent to Groq to generate agent responses. Never enter passwords, API keys, or sensitive personal information in chat.</p></div><span class="setting-badge" id="settings-provider">GROQ</span></div></div>
+            <div class="settings-card">
+              <div class="settings-card-heading"><span class="settings-symbol">⌘</span><div><h2>Model connection</h2><p>Connect and configure your Groq API key and model without restarting the server.</p></div></div>
+              <div class="connection-row"><div><strong id="settings-model">Groq · checking configuration</strong><p id="settings-connection">Checking provider status…</p></div><span class="status-dot" id="settings-dot"></span></div>
+
+              <form id="groq-config-form" class="groq-form" style="margin-top: 18px;">
+                <label class="field-label" for="groq-api-key">Groq API Key</label>
+                <div class="inline-field" style="margin-bottom: 12px;">
+                  <input type="password" id="groq-api-key" placeholder="Enter gsk_... key" autocomplete="off" style="flex: 1; max-width: 360px;">
+                  <button type="button" class="secondary-button" id="toggle-key-visibility">Show</button>
+                </div>
+
+                <label class="field-label" for="groq-model-select">Groq Model</label>
+                <div class="inline-field" style="margin-bottom: 16px;">
+                  <select id="groq-model-select" style="flex: 1; max-width: 360px; height: 32px; padding: 0 9px; border: 1px solid #303542; border-radius: 5px; background: #0d1016; color: var(--text); font-size: 10px;">
+                    <option value="openai/gpt-oss-120b">openai/gpt-oss-120b (Recommended)</option>
+                    <option value="openai/gpt-oss-20b">openai/gpt-oss-20b (Fast)</option>
+                    <option value="qwen/qwen3.8-27b">qwen/qwen3.8-27b</option>
+                    <option value="allam-2-7b">allam-2-7b</option>
+                  </select>
+                  <button type="button" class="secondary-button" id="refresh-models-btn" title="Fetch live models from Groq">Refresh models</button>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <button type="submit" class="primary-button" id="connect-groq-btn">Connect Groq</button>
+                  <span id="groq-connect-status" style="font-size: 9px; color: var(--muted);"></span>
+                </div>
+              </form>
+
+              <div class="setup-note">Get an API key at <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: underline;">console.groq.com/keys</a>. Keys are verified immediately and saved locally to your <code>.env</code> file.</div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
