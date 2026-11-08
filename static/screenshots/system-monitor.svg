@@ -1,0 +1,173 @@
+<svg width="1400" height="1000" viewBox="0 0 1400 1000" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">AgentOS system monitor dashboard</title>
+  <desc id="desc">Dark dashboard UI showing system telemetry, resource cards, trend chart, and execution health.</desc>
+  <defs>
+    <linearGradient id="bgGrad" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#070b15"/>
+      <stop offset="100%" stop-color="#0d1320"/>
+    </linearGradient>
+    <linearGradient id="purpleGlow" x1="0" x2="1">
+      <stop offset="0%" stop-color="#b58cff"/>
+      <stop offset="100%" stop-color="#8b6de6"/>
+    </linearGradient>
+    <linearGradient id="cyanLine" x1="0" x2="1">
+      <stop offset="0%" stop-color="#8fe7ff"/>
+      <stop offset="100%" stop-color="#5db7ff"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="1400" height="1000" fill="url(#bgGrad)"/>
+
+  <rect width="260" height="1000" fill="#0d1220"/>
+  <rect x="260" width="1140" height="1000" fill="#0a0f1a"/>
+
+  <rect x="26" y="25" width="210" height="70" rx="12" fill="#0f1727"/>
+  <rect x="26" y="25" width="52" height="52" rx="12" fill="#201a34"/>
+  <rect x="40" y="43" width="22" height="18" rx="4" fill="#a98cf5"/>
+  <rect x="64" y="43" width="22" height="18" rx="4" fill="#d1c6ff" opacity="0.8"/>
+  <text x="96" y="62" font-size="42" font-family="Segoe UI, Arial, sans-serif" font-weight="700" fill="#f5f7ff">AgentOS</text>
+  <text x="182" y="69" font-size="16" font-family="Segoe UI, Arial, sans-serif" fill="#8f9bb2">2.0</text>
+
+  <rect x="28" y="120" width="204" height="58" rx="12" fill="#1a2133" stroke="#2b3347"/>
+  <text x="52" y="156" font-size="26" font-family="Segoe UI, Arial, sans-serif" fill="#f0f4ff" font-weight="700">+ New request</text>
+
+  <text x="30" y="250" font-size="16" font-family="Segoe UI, Arial, sans-serif" fill="#6a768d" letter-spacing="2">VIEWS</text>
+
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="26" fill="#dfe7f3">
+    <circle cx="42" cy="290" r="8" fill="#9ba7c2"/>
+    <circle cx="42" cy="290" r="3" fill="#0d1220"/>
+    <text x="68" y="298">Assistant</text>
+    <circle cx="42" cy="352" r="9" fill="#b49cf5"/>
+    <circle cx="42" cy="352" r="4" fill="#0d1220"/>
+    <text x="68" y="360">System monitor</text>
+    <circle cx="42" cy="414" r="7" fill="none" stroke="#dbe4ff" stroke-width="2"/>
+    <text x="68" y="422">Agent network</text>
+    <text x="96" y="421" font-size="16" fill="#a5abcd">5</text>
+    <rect x="30" y="452" width="18" height="18" rx="3" fill="none" stroke="#dbe4ff" stroke-width="2"/>
+    <text x="68" y="468">Active tasks</text>
+    <text x="96" y="467" font-size="16" fill="#a5abcd">0</text>
+    <path d="M36 520 L46 510 L56 530" fill="none" stroke="#dbe4ff" stroke-width="2"/>
+    <text x="68" y="528">Approval center</text>
+    <text x="96" y="527" font-size="16" fill="#a5abcd">0</text>
+    <circle cx="42" cy="584" r="7" fill="none" stroke="#dbe4ff" stroke-width="2"/>
+    <path d="M39 584 L42 587 L47 582" fill="none" stroke="#dbe4ff" stroke-width="2"/>
+    <text x="68" y="592">Activity history</text>
+  </g>
+
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="340" y="70" font-size="32" fill="#cfd8ea">AgentOS</text>
+    <text x="520" y="70" font-size="28" fill="#8f9bb2">/</text>
+    <text x="545" y="70" font-size="28" fill="#edf3ff">System monitor</text>
+
+    <rect x="1120" y="42" width="180" height="40" rx="18" fill="#101a2d" stroke="#3c455d"/>
+    <circle cx="1148" cy="62" r="7" fill="#4ce2a7"/>
+    <text x="1168" y="70" font-size="16" fill="#dfe7f3">LIVE • SYSTEM ONLINE</text>
+
+    <rect x="1210" y="30" width="40" height="40" rx="8" fill="#121d2c" stroke="#465064"/>
+    <circle cx="1233" cy="50" r="7" fill="#e7ebff" opacity="0.8"/>
+    <path d="M1230 44 h6 v12 h-6z" fill="#0b1220"/>
+  </g>
+
+  <g filter="url(#softShadow)">
+    <rect x="330" y="120" width="975" height="180" rx="20" fill="#0d1522" stroke="#1d2a38"/>
+    <text x="360" y="152" font-size="16" fill="#8a96ae" letter-spacing="2">SYSTEM TELEMETRY</text>
+    <text x="360" y="208" font-size="58" font-weight="700" fill="#f4f7ff">System monitor</text>
+    <text x="360" y="252" font-size="32" fill="#b1bfd6">Live resource utilization, SQLite health, API latency, and Groq model availability.</text>
+
+    <g>
+      <rect x="950" y="168" width="120" height="42" rx="10" fill="#1a2131"/>
+      <text x="990" y="196" text-anchor="middle" font-size="22" fill="#dfe7f3">Measured Nov 7</text>
+      <text x="990" y="221" text-anchor="middle" font-size="18" fill="#9aa9c0">8:18 PM</text>
+      <rect x="1088" y="166" width="94" height="50" rx="12" fill="#1b2235" stroke="#3a455a"/>
+      <text x="1135" y="198" text-anchor="middle" font-size="28" fill="#dfe7f3">Refresh</text>
+      <rect x="1198" y="166" width="88" height="50" rx="12" fill="#312f5e" stroke="#5745a8"/>
+      <text x="1242" y="198" text-anchor="middle" font-size="28" fill="#ede6ff">Diagnose</text>
+    </g>
+
+    <g>
+      <rect x="360" y="278" width="220" height="36" rx="18" fill="#113028"/>
+      <circle cx="386" cy="296" r="7" fill="#4bd58c"/>
+      <text x="404" y="304" font-size="18" fill="#dfe8f5">Backend • healthy</text>
+
+      <rect x="594" y="278" width="220" height="36" rx="18" fill="#17263a"/>
+      <circle cx="620" cy="296" r="7" fill="#5dd3ff"/>
+      <text x="638" y="304" font-size="18" fill="#dfe8f5">Database • healthy</text>
+
+      <rect x="828" y="278" width="220" height="36" rx="18" fill="#17263a"/>
+      <circle cx="854" cy="296" r="7" fill="#7ed6ff"/>
+      <text x="872" y="304" font-size="18" fill="#dfe8f5">Groq API • available</text>
+
+      <rect x="1062" y="278" width="220" height="36" rx="18" fill="#1b2232"/>
+      <circle cx="1088" cy="296" r="7" fill="#6fba78"/>
+      <text x="1106" y="304" font-size="18" fill="#dfe8f5">WebSocket • connected</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="330" y="340" width="470" height="180" rx="18" fill="#0d1522" stroke="#1e2a39"/>
+    <text x="360" y="372" font-size="18" fill="#8b9bb1">CPU utilization</text>
+    <text x="360" y="432" font-size="54" font-weight="700" fill="#f0f5ff">14.3%</text>
+    <text x="360" y="470" font-size="18" fill="#9aa9c0">Measured on this host • warning at 85%</text>
+    <rect x="360" y="490" width="390" height="8" rx="4" fill="#171f2f"/>
+    <rect x="360" y="490" width="130" height="8" rx="4" fill="url(#purpleGlow)"/>
+
+    <rect x="835" y="340" width="470" height="180" rx="18" fill="#0d1522" stroke="#1e2a39"/>
+    <text x="865" y="372" font-size="18" fill="#8b9bb1">Memory usage</text>
+    <text x="865" y="432" font-size="54" font-weight="700" fill="#f0f5ff">79.9%</text>
+    <text x="865" y="470" font-size="18" fill="#9aa9c0">12.5 GB of 15.7 GB • warning at 85%</text>
+    <rect x="865" y="490" width="390" height="8" rx="4" fill="#171f2f"/>
+    <rect x="865" y="490" width="310" height="8" rx="4" fill="url(#purpleGlow)"/>
+  </g>
+
+  <g>
+    <rect x="330" y="550" width="470" height="180" rx="18" fill="#0d1522" stroke="#1e2a39"/>
+    <text x="360" y="582" font-size="18" fill="#8b9bb1">Disk utilization</text>
+    <text x="360" y="642" font-size="54" font-weight="700" fill="#f0f5ff">51.9%</text>
+    <text x="360" y="680" font-size="18" fill="#9aa9c0">118.8 GB of 228.6 GB • warning at 90%</text>
+    <rect x="360" y="700" width="390" height="8" rx="4" fill="#171f2f"/>
+    <rect x="360" y="700" width="203" height="8" rx="4" fill="url(#purpleGlow)"/>
+
+    <rect x="835" y="550" width="470" height="180" rx="18" fill="#0d1522" stroke="#1e2a39"/>
+    <text x="865" y="582" font-size="18" fill="#8b9bb1">API response time</text>
+    <text x="865" y="642" font-size="54" font-weight="700" fill="#f0f5ff">No samples</text>
+    <text x="865" y="680" font-size="18" fill="#9aa9c0">No API samples yet • rolling 5 min</text>
+  </g>
+
+  <g>
+    <rect x="330" y="760" width="470" height="180" rx="18" fill="#0d1522" stroke="#1e2a39"/>
+    <text x="360" y="792" font-size="18" fill="#8b9bb1">Grok API probe</text>
+    <text x="360" y="852" font-size="54" font-weight="700" fill="#f0f5ff">741.1 ms</text>
+    <text x="360" y="890" font-size="18" fill="#9aa9c0">available</text>
+
+    <rect x="835" y="760" width="470" height="180" rx="18" fill="#0d1522" stroke="#1e2a39"/>
+    <text x="865" y="792" font-size="18" fill="#8b9bb1">Backend uptime</text>
+    <text x="865" y="852" font-size="54" font-weight="700" fill="#f0f5ff">2h 6m</text>
+    <text x="865" y="890" font-size="18" fill="#9aa9c0">Since this process started</text>
+  </g>
+
+  <g>
+    <rect x="330" y="930" width="975" height="230" rx="18" fill="#0d1522" stroke="#1e2a39"/>
+    <text x="360" y="965" font-size="18" fill="#8b9bb1">HISTORICAL TRENDS</text>
+    <text x="360" y="1015" font-size="54" font-weight="700" fill="#f0f5ff">Resource utilization</text>
+
+    <rect x="1025" y="965" width="200" height="40" rx="10" fill="#121d2d" stroke="#3b465a"/>
+    <text x="1125" y="992" text-anchor="middle" font-size="18" fill="#dfe7f3">Last 24 hours</text>
+
+    <line x1="360" y1="1035" x2="1245" y2="1035" stroke="#273349"/>
+    <path d="M360 1035 L425 1018 L470 955 L520 1015 L560 972 L610 1008 L660 925 L710 1014 L760 990 L820 1006 L880 960 L930 1018 L980 936 L1030 1014 L1090 992 L1150 950 L1210 1035 L1245 1035" fill="none" stroke="url(#purpleGlow)" stroke-width="3"/>
+    <path d="M360 1035 L420 980 L470 938 L520 1008 L560 986 L610 945 L660 1016 L710 970 L760 974 L820 1005 L880 950 L930 995 L980 1020 L1030 1012 L1090 980 L1150 1008 L1210 1035 L1245 1035" fill="none" stroke="url(#cyanLine)" stroke-width="3" opacity="0.9"/>
+
+    <g font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#8d9ab0">
+      <text x="350" y="1082">100%</text>
+      <text x="350" y="1058">75%</text>
+      <text x="350" y="1033">50%</text>
+      <text x="350" y="1008">25%</text>
+      <text x="350" y="983">0%</text>
+      <text x="615" y="1105">6:05 PM</text>
+      <text x="1115" y="1105">8:19 PM</text>
+    </g>
+  </g>
+</svg>
