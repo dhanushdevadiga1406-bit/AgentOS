@@ -29,13 +29,13 @@ python -m pip install -r requirements.txt
 Copy-Item .env.example .env
 ```
 
-Edit `.env` and set `GROQ_API_KEY` to your own key (and optionally `GROQ_MODEL=openai/gpt-oss-120b`). Alternatively, you can connect Groq directly from the **Settings & privacy** tab in the web UI. Then run:
+Edit `.env` and set `GROQ_API_KEY` to your own key (and optionally `GROQ_MODEL=openai/gpt-oss-120b`). Alternatively, you can connect Groq directly from the **Settings & privacy** tab in the web UI. The backend uses the model for the orchestrator and the monitor diagnostic workflow.
 
 ```powershell
 uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
-Open [http://127.0.0.1:8000](http://127.0.0.1:8000). Keep the server bound to localhost: authentication is not implemented, so this foundation is intended for a single trusted user on their own machine. The API key remains on the server and is never sent to the browser. Chat requests are sent to Groq for model inference.
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000). Keep the server bound to localhost: authentication is not implemented, so this foundation is intended for a single trusted user on their own machine.
 
 Without `GROQ_API_KEY`, the dashboard and local history remain available, but chat returns a visible configuration error rather than simulating agent output.
 
@@ -87,16 +87,11 @@ SQLite is created automatically at `data/agentos.db`. Override the location with
 
 ## System monitoring
 
-The monitor samples host CPU, memory, disk, backend uptime, SQLite integrity/size, API latency/error rate, Groq availability, and connected WebSocket clients every 15 seconds. Samples and API/agent execution records are stored in SQLite. API error rates and latency are rolling five-minute aggregates; agent response durations measure the elapsed LangGraph node execution. Historical resource charts can be filtered by one hour, six hours, one day, or seven days.
+The monitor samples host CPU, memory, disk, backend uptime, SQLite integrity/size, API latency/error rate, Groq availability, and connected WebSocket clients every 15 seconds. Samples and API/agent events are stored in SQLite to support short-term trends and diagnostics.
 
-The initial alert thresholds are 85% CPU, 85% memory, 90% disk, 1500 ms average API latency, and five WebSocket disconnects per five minutes. Users can change these values and opt into browser notifications from the monitor. Alerts are retained after acknowledgement; active alerts resolve automatically when the measured condition clears. Notifications require browser permission.
+The initial alert thresholds are 85% CPU, 85% memory, 90% disk, 1500 ms average API latency, and five WebSocket disconnects per five minutes. Users can change these values and opt into browser notifications when alarms trigger.
 
-System diagnosis is user-triggered and requires Groq. The diagnostic LangGraph receives a real health snapshot and recent application errors, stores the report, and provides advisory recommendations only. It never changes system settings, executes remediation, or claims a fix was verified. The optional Groq connectivity check calls the provider's models-list endpoint and is cached for up to 60 seconds; actual model response time is measured from agent runs.
+System diagnosis is user-triggered and requires Groq. The diagnostic LangGraph receives a real health snapshot and recent application errors, stores the report, and provides advisory recommendations on the dashboard.
 
-The monitor exposes data for the local server process and host. It cannot alert while the backend itself is offline; the browser instead shows a lost live-connection status until it reconnects. As with the rest of the app, authentication is not implemented: keep the server bound to localhost and do not expose it to untrusted networks.
+The monitor exposes data for the local server process and host. It cannot alert while the backend itself is offline; the browser instead shows a lost live-connection status until it reconnects. As with the rest of AgentOS, this is a local-first monitoring prototype meant for trusted local use.
 
-### Last system monitoring
-
-![Last system monitoring overview](static/screenshots/assistant.png)
-
-![Last system monitoring details](static/screenshots/agent-network.png)
