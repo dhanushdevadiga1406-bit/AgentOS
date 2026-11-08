@@ -94,4 +94,6 @@ The initial alert thresholds are 85% CPU, 85% memory, 90% disk, 1500 ms average 
 System diagnosis is user-triggered and requires Groq. The diagnostic LangGraph receives a real health snapshot and recent application errors, stores the report, and provides advisory recommendations on the dashboard.
 
 The monitor exposes data for the local server process and host. It cannot alert while the backend itself is offline; the browser instead shows a lost live-connection status until it reconnects. As with the rest of AgentOS, this is a local-first monitoring prototype meant for trusted local use.
+C:\Users\Dhanush\Pictures\Screenshots.png
+C:\Users\Dhanush\Pictures\Screenshots.png
 
