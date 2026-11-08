@@ -94,3 +94,9 @@ The initial alert thresholds are 85% CPU, 85% memory, 90% disk, 1500 ms average 
 System diagnosis is user-triggered and requires Groq. The diagnostic LangGraph receives a real health snapshot and recent application errors, stores the report, and provides advisory recommendations only. It never changes system settings, executes remediation, or claims a fix was verified. The optional Groq connectivity check calls the provider's models-list endpoint and is cached for up to 60 seconds; actual model response time is measured from agent runs.
 
 The monitor exposes data for the local server process and host. It cannot alert while the backend itself is offline; the browser instead shows a lost live-connection status until it reconnects. As with the rest of the app, authentication is not implemented: keep the server bound to localhost and do not expose it to untrusted networks.
+
+### Last system monitoring
+
+![Last system monitoring overview](static/screenshots/assistant.png)
+
+![Last system monitoring details](static/screenshots/agent-network.png)
